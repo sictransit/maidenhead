@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace Maidenhead
 {
-    public static class Maidenhead
+    public static class MaidenheadConverter
     {
         public static GeoCoordinate Convert(string locator)
         {
@@ -73,9 +73,9 @@ namespace Maidenhead
                 throw new ArgumentNullException(nameof(s));
             }
 
-            if (s.Length % 2 != 0)
+            if (string.IsNullOrEmpty(s) || s.Length % 2 != 0)
             {
-                throw new ArgumentException("Length must be a multiple of two.", nameof(s));
+                throw new ArgumentException("Length must be >0 and even.", nameof(s));
             }
 
             return Enumerable.Range(0, s.Length / 2).Select(i => s.Substring(i * 2, 2));

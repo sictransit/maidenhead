@@ -2,7 +2,6 @@
 {
     public class GeoCoordinate
     {
-
         public GeoCoordinate(double latitude, double longitude)
         {
             Latitude = latitude;

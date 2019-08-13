@@ -7,13 +7,13 @@ namespace Maidenhead
     {
         static void Main(string[] args)
         {
-            var locator = (args.FirstOrDefault() ?? "JO89UT56XU42").ToUpperInvariant();
+            var locator = (args.FirstOrDefault() ?? "JO89UT56XU42");
 
             Console.WriteLine(locator);
 
-            var c = Maidenhead.Convert(locator);
+            var coordinate = MaidenheadConverter.Convert(locator);
 
-            Console.WriteLine(c.PrettyPrint());
+            Console.WriteLine(coordinate.PrettyPrint());
         }
     }
 }
