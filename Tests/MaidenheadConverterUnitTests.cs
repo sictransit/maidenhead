@@ -8,45 +8,57 @@ namespace Tests
     public class MaidenheadConverterUnitTests
     {
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void TestValidInputPart1()
+        {
+            Assert.IsTrue(MaidenheadConverter.IsValid("JO"));
+        }
+
+        [TestMethod]
+        public void TestValidInputPart2()
+        {
+            Assert.IsTrue(MaidenheadConverter.IsValid("JO89"));
+        }
+
+        [TestMethod]
+        public void TestValidInputPart3()
+        {
+            Assert.IsTrue(MaidenheadConverter.IsValid("JO89UT"));
+        }
+
+        [TestMethod]
         public void TestInvalidInputPart1()
         {
-            var _ = MaidenheadConverter.Convert("ZZ");
+            Assert.IsFalse(MaidenheadConverter.IsValid("ZZ"));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TestInvalidInputPart2()
         {
-            var _ = MaidenheadConverter.Convert("JOZZ");
+            Assert.IsFalse(MaidenheadConverter.IsValid("JOZZ"));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void TestInvalidInputPart3()
         {
-            var _ = MaidenheadConverter.Convert("JO89ZZ");
+            Assert.IsFalse(MaidenheadConverter.IsValid("JO89ZZ"));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
         public void TestUnpairedPart()
         {
-            var _ = MaidenheadConverter.Convert("JO89U");
+            Assert.IsFalse(MaidenheadConverter.IsValid("JO89U"));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
         public void TestEmptyLocator()
         {
-            var _ = MaidenheadConverter.Convert(string.Empty);
+            Assert.IsFalse(MaidenheadConverter.IsValid(string.Empty));
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void TestNullLocator()
         {
-            var _ = MaidenheadConverter.Convert(null);
+            Assert.IsFalse(MaidenheadConverter.IsValid(null));
         }
     }
 }
