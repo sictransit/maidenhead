@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Serilog;
+using System;
 using System.Linq;
 
 namespace Maidenhead
@@ -7,13 +8,18 @@ namespace Maidenhead
     {
         static void Main(string[] args)
         {
-            var locator = (args.FirstOrDefault() ?? "JO89UT56XU42");
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Debug()
+                .WriteTo.Console()
+                .CreateLogger();
 
-            Console.WriteLine(locator);
+            var locator = (args.FirstOrDefault() ?? "JO89");
+
+            Log.Information($"Decoding: {locator}");
 
             var coordinate = MaidenheadConverter.Convert(locator);
 
-            Console.WriteLine(coordinate.PrettyPrint());
+            Log.Information($"Coordinates: {coordinate.PrettyPrint()}");
         }
     }
 }

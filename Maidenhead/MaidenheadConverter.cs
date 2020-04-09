@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Serilog;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -21,8 +22,7 @@ namespace Maidenhead
 
             var c = new GeoCoordinate(-90, -180);
 
-            var longDivisor = 1d;
-            var latDivisor = 1d;
+            var divisor = 1d;
 
             var cnt = 0;
 
@@ -34,26 +34,31 @@ namespace Maidenhead
 
                 if (cnt == 1)
                 {
-                    longDivisor *= 18;
-                    latDivisor *= 18;                   
+                    divisor *= 18;
                 }
                 else if (cnt % 2 == 0)
                 {
-                    longDivisor *= 10;
-                    latDivisor *= 10;
+                    divisor *= 10;
                     isLetter = false;
                 }
                 else
                 {
-                    longDivisor *= 24;
-                    latDivisor *= 24;                   
+                    divisor *= 24;
                 }
 
                 int longValue = pair[0] - (isLetter ? 'A' : '0');
                 int latValue = pair[1] - (isLetter ? 'A' : '0');
 
-                c.Longitude += (360d * longValue) / longDivisor;
-                c.Latitude += (180d * latValue) / latDivisor;
+                var longPart = (360d * longValue) / divisor;
+                var latPart = (180d * latValue) / divisor;
+
+                c.Longitude += longPart;
+                c.Latitude += latPart;
+
+                Log.Debug($"{pair[0]} (long): {longValue}*360/{divisor} = {longValue}*{360 / divisor} = {longPart}°");
+                Log.Debug($"{pair[1]} (lat): {latValue}*180/{divisor} = {latValue}*{180 / divisor} = {latPart}°");
+                Log.Debug($"--> {c}");
+                Log.Debug($"--> {c.PrettyPrint()}");
             }
 
             return c;
