@@ -1,7 +1,8 @@
 {
   "profiles": {
     "Maidenhead": {
-      "commandName": "Project"
+      "commandName": "Project",
+      "commandLineArgs": "--verbose --geohash u6ss4j75eg6e"
     }
   }
 }
